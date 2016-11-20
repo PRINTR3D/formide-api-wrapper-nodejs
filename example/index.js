@@ -156,6 +156,20 @@ app.get('/printers', checkAccessToken, function (req, res) {
         .catch(respondWithError.bind({ req, res }));
 });
 
+app.get('/printers/create', checkAccessToken, function (req, res) {
+    formide.printers
+        .create({
+            name: 'New API Printer',
+            axis: Formide.statics.PRINTER.AXIS.NORMAL,
+            bed: { x: 200, y: 200, z: 200, heated: true, printerType: Formide.statics.PRINTER.TYPES.CARTESIAN },
+            extruders: [{ id: 0, name: 'Extruder 1', filamentDiameter: Formide.statics.PRINTER.FILAMENT_SIZES.SMALL, nozzleSize: 400 }]
+        })
+        .then(function (createdPrinter) {
+            return res.json(createdPrinter);
+        })
+        .catch(respondWithError.bind({ req, res }));
+})
+
 app.get('/materials', checkAccessToken, function (req, res) {
     formide.materials
         .list()
