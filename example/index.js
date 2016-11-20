@@ -74,10 +74,9 @@ function handleLogin(response, req, res) {
         req.session.accessToken = response.access_token;
         req.session.refreshToken = response.refresh_token;
 
-        if (req.session.originalUrl && req.session.originalUrl !== undefined) {
+        if (req.session.originalUrl && req.session.originalUrl !== 'undefined') {
+            res.redirect(req.session.originalUrl);
             delete req.session.originalUrl;
-            const originalUrl = req.session.originalUrl;
-            res.redirect(originalUrl);
         }
         else {
             return res.redirect('/');
@@ -148,6 +147,15 @@ app.get('/devices', checkAccessToken, function (req, res) {
         .catch(respondWithError.bind({ req, res }));
 });
 
+app.get('/printers', checkAccessToken, function (req, res) {
+    formide.printers
+        .list()
+        .then(function (printers) {
+            return res.json(printers);
+        })
+        .catch(respondWithError.bind({ req, res }));
+});
+
 app.get('/last_status', function (req, res) {
     var formideWebSocket = null;
 
@@ -164,4 +172,6 @@ app.get('/', function (req, res) {
     return res.send('OK');
 });
 
-app.listen(PORT);
+app.listen(PORT, function () {
+    console.info(`Example app running on port ${PORT}...`)
+});

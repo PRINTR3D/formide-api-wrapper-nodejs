@@ -16,6 +16,9 @@
   },
   "license": "GPLv2",
   "main": "./lib/index",
+  "scripts": {
+    "example-server": "node example/index.js"
+  },
   "dependencies": {
     "request": "^2.53.0",
     "socket.io-client": "latest",
