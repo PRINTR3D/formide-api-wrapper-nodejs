@@ -17,7 +17,8 @@
   "license": "GPLv2",
   "main": "./lib/index",
   "scripts": {
-    "example-server": "node example/index.js"
+    "example-express-server": "node examples/express-server/index.js",
+    "example-terminal-graph": "node examples/terminal-graph/index.js"
   },
   "dependencies": {
     "request": "^2.53.0",
@@ -25,6 +26,8 @@
     "socketio-wildcard": "^0.3.0"
   },
   "devDependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.5.5",
     "connect-redis": "^3.1.0",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",

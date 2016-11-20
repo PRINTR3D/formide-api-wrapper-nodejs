@@ -4,12 +4,12 @@
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const Formide = require('../lib');
+const Formide = require('../../lib');
 const PORT    = 4000;
 
 // Load .env file
 require('dotenv').config({
-    path: 'example/.env'
+    path: 'examples/express-server/.env'
 });
 
 // Initialize new Formide API instance using client ID and secret from environment
