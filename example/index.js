@@ -161,7 +161,7 @@ app.get('/printers/create', checkAccessToken, function (req, res) {
         .create({
             name: 'New API Printer',
             axis: Formide.statics.PRINTER.AXIS.NORMAL,
-            bed: { x: 200, y: 200, z: 200, heated: true, printerType: Formide.statics.PRINTER.TYPES.CARTESIAN },
+            bed: { x: 200, y: 200, z: 200, heated: true, printerType: Formide.statics.PRINTER.TYPES.XYZ },
             extruders: [{ id: 0, name: 'Extruder 1', filamentDiameter: Formide.statics.PRINTER.FILAMENT_SIZES.SMALL, nozzleSize: 400 }]
         })
         .then(function (createdPrinter) {
