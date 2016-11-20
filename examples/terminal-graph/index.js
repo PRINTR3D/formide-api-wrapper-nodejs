@@ -6,11 +6,7 @@ const blessed = require('blessed')
 const blessed_contrib = require('blessed-contrib')
 const screen = blessed.screen();
 const extruderLines = blessed_contrib.line({
-    style: {
-        line: "yellow",
-        text: "green",
-        baseline: "black"
-    },
+    style: { line: "yellow", text: "green", baseline: "black" },
     xLabelPadding: 3,
     xPadding: 5,
     showLegend: true,
@@ -48,8 +44,4 @@ formideWebSocket.on('printer.status', function (data) {
 
     extruderLines.setData(extruderGraphs);
     screen.render();
-});
-
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-    return process.exit(0);
 });
