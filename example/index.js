@@ -103,9 +103,7 @@ app.get('/login/redirect', function (req, res) {
         .then(function (response) {
             return handleLogin(response, req, res);
         })
-        .catch(function (err) {
-            console.log(err);
-        });
+        .catch(respondWithError.bind({ req, res }));
 });
 
 app.get('/session', function (req, res) {
@@ -137,7 +135,8 @@ app.get('/me', checkAccessToken, function (req, res) {
         .account()
         .then(function (accountInfo) {
             return res.json(accountInfo);
-        });
+        })
+        .catch(respondWithError.bind({ req, res }));
 });
 
 app.get('/devices', checkAccessToken, function (req, res) {
