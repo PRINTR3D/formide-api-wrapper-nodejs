@@ -156,6 +156,15 @@ app.get('/printers', checkAccessToken, function (req, res) {
         .catch(respondWithError.bind({ req, res }));
 });
 
+app.get('/materials', checkAccessToken, function (req, res) {
+    formide.materials
+        .list()
+        .then(function (materials) {
+            return res.json(materials);
+        })
+        .catch(respondWithError.bind({ req, res }));
+})
+
 app.get('/last_status', function (req, res) {
     var formideWebSocket = null;
 
