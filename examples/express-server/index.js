@@ -16,8 +16,7 @@ require('dotenv').config({
 const formide = new Formide.client({
     clientId:       process.env.FORMIDE_CLIENT_ID,
     clientSecret:   process.env.FORMIDE_CLIENT_SECRET,
-    redirectURI:    process.env.FORMIDE_REDIRECT_URI,
-    webSocketToken: process.env.FORMIDE_SOCKET_TOKEN
+    redirectURI:    process.env.FORMIDE_REDIRECT_URI
 });
 
 const app = express();
@@ -168,7 +167,7 @@ app.get('/printers/create', checkAccessToken, function (req, res) {
             return res.json(createdPrinter);
         })
         .catch(respondWithError.bind({ req, res }));
-})
+});
 
 app.get('/materials', checkAccessToken, function (req, res) {
     formide.materials
@@ -177,18 +176,6 @@ app.get('/materials', checkAccessToken, function (req, res) {
             return res.json(materials);
         })
         .catch(respondWithError.bind({ req, res }));
-})
-
-app.get('/last_status', function (req, res) {
-    var formideWebSocket = null;
-
-    // we wrap this in a try-catch to prevent a crash when connecting without access token
-    try { formideWebSocket = formide.socket.getSocket(); }
-    catch (e) { return res.status(500).send(); }
-
-    formideWebSocket.once('printer.status', function (data) {
-        return res.json(data);
-    });
 });
 
 app.get('/', function (req, res) {
