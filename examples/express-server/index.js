@@ -56,9 +56,8 @@ function checkAccessToken(req, res, next) {
 function respondWithError(error) {
     if (error.body) // error produced by Formide API
         return this.res.status(error.body.statusCode).send(error.body);
-    else {
+    else
         return this.res.status(500).send({ message: error.message });
-    }
 }
 
 /**
