@@ -1,4 +1,4 @@
-# formide-api-wrapper-nodejs
+# Formide API wrapper for Node.js
 Node.JS language wrapper for Formide API. Supports HTTP and WebSocket APIs.
 
 ## Get started
