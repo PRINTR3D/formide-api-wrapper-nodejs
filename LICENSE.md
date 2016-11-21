@@ -1,4 +1,4 @@
-Copyright (c) 2013-2015 Printr B.V. All rights reserved
+Copyright (c) 2013-2016 Printr B.V. All rights reserved
 
 You can redistribute it and/or modify
 it under the terms of the GNU General Public License version 2 as
