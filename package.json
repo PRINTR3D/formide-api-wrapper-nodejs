@@ -1,5 +1,5 @@
 {
-  "name": "formide-api-wrapper-nodejs",
+  "name": "formide-api",
   "description": "Node.js wrapper for FORMIDE api",
   "version": "1.0.0",
   "author": "Chris ter Beke <chris@printr.nl>",
