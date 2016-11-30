@@ -24,7 +24,7 @@ require('dotenv').config({
 
 // Initialize new Formide API instance with websocket token
 const formide = new Formide.client({
-    webSocketToken: process.env.FORMIDE_SOCKET_TOKEN
+    accessToken: process.env.FORMIDE_ACCESS_TOKEN
 });
 
 var formideWebSocket = null;
