@@ -1,7 +1,7 @@
 {
   "name": "formide-api",
   "description": "Node.js wrapper for FORMIDE api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Chris ter Beke <chris@printr.nl>",
   "homepage": "https://developers.formide.com",
   "keywords": [
