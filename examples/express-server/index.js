@@ -1,6 +1,7 @@
 'use strict';
 
 // modules
+const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
@@ -9,14 +10,15 @@ const PORT    = 4000;
 
 // Load .env file
 require('dotenv').config({
-    path: 'examples/express-server/.env'
+    path: '.env'
 });
 
 // Initialize new Formide API instance using client ID and secret from environment
 const formide = new Formide.client({
     clientId:       process.env.FORMIDE_CLIENT_ID,
     clientSecret:   process.env.FORMIDE_CLIENT_SECRET,
-    redirectURI:    process.env.FORMIDE_REDIRECT_URI
+    redirectURI:    process.env.FORMIDE_REDIRECT_URI,
+    rootURL:        'https://api-dev.formide.com'
 });
 
 const app = express();
@@ -57,7 +59,7 @@ function respondWithError(error) {
     if (error.body) // error produced by Formide API
         return this.res.status(error.body.statusCode).send(error.body);
     else
-        return this.res.status(500).send({ message: error.message });
+        return this.res.status(500).send({ message: error.message, name: error.name, code: error.code });
 }
 
 /**
@@ -94,7 +96,7 @@ app.get('/login', function (req, res) {
     return res.redirect(loginURL);
 });
 
-app.get('/login/redirect', function (req, res) {
+app.get('/redirect', function (req, res) {
     formide.auth
         .getAccessToken(req.query.code)
         .then(function (response) {
@@ -175,6 +177,25 @@ app.get('/materials', checkAccessToken, function (req, res) {
             return res.json(materials);
         })
         .catch(respondWithError.bind({ req, res }));
+});
+
+app.get('/upload', checkAccessToken, function (req, res) {
+    formide.files
+        .upload([
+            fs.createReadStream('./assets/benchy.stl'),   // upload an STL file
+            fs.createReadStream('./assets/benchy.gcode'), // upload a G-code file
+            fs.createReadStream('./assets/files.zip')     // upload a zip containing multiple STL and G-code files
+        ])
+        .then(function (uploadResponse) {
+            return res.json(uploadResponse);
+        })
+        .catch(respondWithError.bind({ req, res }));
+});
+
+app.get('/download', checkAccessToken, function (req, res) {
+    const downloadStream = formide.files.download('583f5e707508400005b3dbbc')
+    downloadStream.on('error', respondWithError.bind({ req, res }))
+    downloadStream.pipe(res);
 });
 
 app.get('/', function (req, res) {
