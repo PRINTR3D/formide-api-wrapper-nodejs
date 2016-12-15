@@ -4,6 +4,7 @@
 const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
+const bodyParser = require('body-parser');
 const RedisStore = require('connect-redis')(session);
 const Formide = require('../../lib');
 const PORT    = 4000;
@@ -30,6 +31,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+// Use body parsers
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 /**
  * Middleware that checks authentication
@@ -196,6 +201,11 @@ app.get('/download', checkAccessToken, function (req, res) {
     const downloadStream = formide.files.download('583f5e707508400005b3dbbc')
     downloadStream.on('error', respondWithError.bind({ req, res }))
     downloadStream.pipe(res);
+});
+
+app.post('/webhook', function (req, res) {
+    console.log(req.body);
+    return res.json('OK, thanks');
 });
 
 app.get('/', function (req, res) {
