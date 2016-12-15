@@ -33,7 +33,7 @@ app.use(session({
 }));
 
 // Use body parsers
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 /**
@@ -204,8 +204,10 @@ app.get('/download', checkAccessToken, function (req, res) {
 });
 
 app.post('/webhook', function (req, res) {
-    console.log(req.body);
-    return res.json('OK, thanks');
+    return res.json({
+        message: 'I got a WebHook!',
+        debug: 'Some data useful for later'
+    });
 });
 
 app.get('/', function (req, res) {
